@@ -5,6 +5,7 @@
 
 <!-- toc -->
 + [Let's get started!](#lets-get-started)
++ [Resources](#resources)
 <!-- tocstop -->
 
 ## Let's get started!
@@ -26,3 +27,10 @@
     a. Locate the `terraform.cloud` block and replace **`signalroom`** with your [Terraform Cloud Organization Name](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/organizations).
 
     b. In the `terraform.cloud.workspaces` block, replace **`snowflake-resources-workspace`** with your [Terraform Cloud Organization's Workspaces Name](https://developer.hashicorp.com/terraform/cloud-docs/workspaces).
+
+## Resources
+
+[Snowflake's Terraforming Quickstart](https://quickstarts.snowflake.com/guide/terraforming_snowflake/index.html?index=..%2F..index#0)
+
+[Terraform Snowflake Provider Beta](https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest/docs)
+> *[Roadmap](https://github.com/Snowflake-Labs/terraform-provider-snowflake/blob/main/ROADMAP.md)*
