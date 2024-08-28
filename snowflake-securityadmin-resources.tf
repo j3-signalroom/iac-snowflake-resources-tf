@@ -58,7 +58,7 @@ resource "snowflake_user_public_keys" "user" {
 
 resource "snowflake_grant_privileges_to_account_role" "user_grant" {
   provider          = snowflake.security_admin
-  privileges        = ["MONITOR"]
+  privileges        = ["MONITOR","SYSADMIN","SECURITYADMIN","ACCOUNTADMIN"]
   account_role_name = snowflake_role.role.name  
   on_account_object {
     object_type = "USER"

@@ -3,7 +3,7 @@ terraform {
       organization = "signalroom"
 
         workspaces {
-            name = "snowflake-resources-workspace"
+            name = "snowflake-resources-workspace-004"
         }
   }
 
@@ -20,7 +20,7 @@ terraform {
 }
 
 # Create the Snowflake user RSA key pairs
-module "snowflake_user_rsa_key_pairs_rotation" {  
+module "snowflake_user_rsa_key_pairs_rotation" {   
     source  = "github.com/j3-signalroom/iac-snowflake-user-rsa_key_pairs_rotation-tf_module"
 
     # Required Input(s)
