@@ -2,127 +2,147 @@
 
 #
 # *** Script Syntax ***
-# scripts/run-terraform-locally.sh --environment=<ENVIRONMENT_NAME> --profile=<SSO_PROFILE_NAME> --action=<create | destroy> --snowflake_account_locator=<snowflake_account_locator> --snowflake_username=<SNOWFLAKE_USERNAME>
+# scripts/run-terraform-locally.sh <create | delete> --profile=<SSO_PROFILE_NAME> \
+#                                                    --snowflake_account=<SNOWFLAKE_ACCOUNT> \
+#                                                    --snowflake_user=<SNOWFLAKE_USER> \
+#                                                    --snowflake_password=<SNOWFLAKE_PASSWORD> \
+#                                                    --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> \
+#                                                    --tf_snowflake_user=<TF_SNOWFLAKE_USER>
 #
 #
 
-# Check if arguments were supplied; otherwise exit script
-if [ ! -n "$1" ]
-then
+# Check required command (create or delete) was supplied
+case $1 in
+  create)
+    create_action=true;;
+  delete)
+    create_action=false;;
+  *)
     echo
-    echo "(Error Message 001)  You did not include all four arguments in the call."
+    echo "(Error Message 001)  You did not specify one of the commands: create | delete."
     echo
-    echo "Usage:  Require all four arguments ---> `basename $0` --environment=<ENVIRONMENT_NAME> --profile=<SSO_PROFILE_NAME> --action=<create | destroy> --snowflake_account_locator=<snowflake_account_locator> --snowflake_username=<SNOWFLAKE_USERNAME>"
+    echo "Usage:  Require all four arguments ---> `basename $0` <create | delete> --profile=<SSO_PROFILE_NAME> --snowflake_account=<SNOWFLAKE_ACCOUNT> --snowflake_user=<SNOWFLAKE_USER> --snowflake_password=<SNOWFLAKE_PASSWORD> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --tf_snowflake_user=<TF_SNOWFLAKE_USER>"
     echo
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
-fi
+    ;;
+esac
 
-# Get the arguments passed
-arg_count=0
-action_argument_supplied=false
+# Get the arguments passed by shift to remove the first word
+# then iterate over the rest of the arguments
+shift
 for arg in "$@" # $@ sees arguments as separate words
 do
     case $arg in
         *"--profile="*)
             AWS_PROFILE=$arg;;
-        *"--environment="*)
-            arg_length=14
-            environment_name=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
-        *"--action=create"*)
-            action_argument_supplied=true
-            create_action=true;;
-        *"--action=destroy"*)
-            action_argument_supplied=true
-            create_action=false;;
-        *"--snowflake_account_locator="*)
-            arg_length=26
-            snowflake_account_locator=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
-        *"--snowflake_username="*)
+        *"--snowflake_account="*)
+            arg_length=20
+            snowflake_account=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
+        *"--snowflake_user="*)
+            arg_length=17
+            snowflake_user=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
+        *"--snowflake_password="*)
             arg_length=21
-            snowflake_username=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
+            snowflake_password=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
+        *"--snowflake_warehouse="*)
+            arg_length=22
+            snowflake_warehouse=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
+        *"--tf_snowflake_user="*)
+            arg_length=20
+            tf_snowflake_user=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
     esac
-    let "arg_count+=1"
 done
-
-# Check required --environment argument was supplied
-if [ -z $environment_name ]
-then
-    echo
-    echo "(Error Message 002)  You did not include the proper use of the --environment=<ENVIRONMENT_NAME> argument in the call."
-    echo
-    echo "Usage:  Require all four arguments ---> `basename $0` --environment=<ENVIRONMENT_NAME> --profile=<SSO_PROFILE_NAME> --action=<create | destroy> --snowflake_account_locator=<snowflake_account_locator> --snowflake_username=<SNOWFLAKE_USERNAME>"
-    echo
-    exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
-fi
-
 # Check required --profile argument was supplied
 if [ -z $AWS_PROFILE ]
 then
     echo
-    echo "(Error Message 003)  You did not include the proper use of the --profile=<AWS_SSO_SSO_PROFILE_NAME> argument in the call."
+    echo "(Error Message 002)  You did not include the proper use of the --profile=<AWS_SSO_SSO_PROFILE_NAME> argument in the call."
     echo
-    echo "Usage:  Require all four arguments ---> `basename $0` --environment=<ENVIRONMENT_NAME> --profile=<SSO_PROFILE_NAME> --action=<create | destroy> --snowflake_account_locator=<snowflake_account_locator> --snowflake_username=<SNOWFLAKE_USERNAME>"
+    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake_account=<SNOWFLAKE_ACCOUNT> --snowflake_user=<SNOWFLAKE_USER> --snowflake_password=<SNOWFLAKE_PASSWORD> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --tf_snowflake_user=<TF_SNOWFLAKE_USER>"
     echo
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
 fi
 
-# Check required --action argument was supplied
-if [ "$action_argument_supplied" = false ]
+# Check required --snowflake_account argument was supplied
+if [ -z $snowflake_account ]
 then
     echo
-    echo "(Error Message 004)  You did not include the proper use of the --action=<create | destroy> argument in the call."
+    echo "(Error Message 003)  You did not include the proper use of the --snowflake_account=<SNOWFLAKE_ACCOUNT> argument in the call."
     echo
-    echo "Usage:  Require all four arguments ---> `basename $0` --environment=<ENVIRONMENT_NAME> --profile=<SSO_PROFILE_NAME> --action=<create | destroy> --snowflake_account_locator=<snowflake_account_locator> --snowflake_username=<SNOWFLAKE_USERNAME>"
+    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake_account=<SNOWFLAKE_ACCOUNT> --snowflake_user=<SNOWFLAKE_USER> --snowflake_password=<SNOWFLAKE_PASSWORD> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --tf_snowflake_user=<TF_SNOWFLAKE_USER>"
     echo
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
 fi
 
-# Check required --snowflake_account_locator argument was supplied
-if [ -z $snowflake_account_locator ]
+# Check required --snowflake_user argument was supplied
+if [ -z $snowflake_user ]
 then
     echo
-    echo "(Error Message 005)  You did not include the proper use of the --snowflake_account_locator=<snowflake_account_locator> argument in the call."
+    echo "(Error Message 004)  You did not include the proper use of the --snowflake_user=<SNOWFLAKE_USER> argument in the call."
     echo
-    echo "Usage:  Require all four arguments ---> `basename $0` --environment=<ENVIRONMENT_NAME> --profile=<SSO_PROFILE_NAME> --action=<create | destroy> --snowflake_account_locator=<snowflake_account_locator> --snowflake_username=<SNOWFLAKE_USERNAME>"
+    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake_account=<SNOWFLAKE_ACCOUNT> --snowflake_user=<SNOWFLAKE_USER> --snowflake_password=<SNOWFLAKE_PASSWORD> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --tf_snowflake_user=<TF_SNOWFLAKE_USER>"
     echo
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
 fi
 
-# Check required --snowflake_username argument was supplied
-if [ -z $snowflake_username ]
+# Check required --snowflake_password argument was supplied
+if [ -z $snowflake_password ]
 then
     echo
-    echo "(Error Message 006)  You did not include the proper use of the --snowflake_username=<SNOWFLAKE_USERNAME> argument in the call."
+    echo "(Error Message 005)  You did not include the proper use of the --snowflake_password=<SNOWFLAKE_PASSWORD> argument in the call."
     echo
-    echo "Usage:  Require all four arguments ---> `basename $0` --environment=<ENVIRONMENT_NAME> --profile=<SSO_PROFILE_NAME> --action=<create | destroy> --snowflake_account_locator=<snowflake_account_locator> --snowflake_username=<SNOWFLAKE_USERNAME>"
+    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake_account=<SNOWFLAKE_ACCOUNT> --snowflake_user=<SNOWFLAKE_USER> --snowflake_password=<SNOWFLAKE_PASSWORD> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --tf_snowflake_user=<TF_SNOWFLAKE_USER>"
     echo
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
 fi
 
-# Get the SSO AWS_ACCESS_KEY_ID, AWS_ACCESS_SECRET_KEY, AWS_SESSION_TOKEN, and AWS_REGION, and
-# set them as environmental variables
+# Check required --snowflake_warehouse argument was supplied
+if [ -z $snowflake_warehouse ]
+then
+    echo
+    echo "(Error Message 006)  You did not include the proper use of the --snowflake_user=<SNOWFLAKE_WAREHOUSE> argument in the call."
+    echo
+    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake_account=<SNOWFLAKE_ACCOUNT> --snowflake_user=<SNOWFLAKE_USER> --snowflake_password=<SNOWFLAKE_PASSWORD> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --tf_snowflake_user=<TF_SNOWFLAKE_USER>"
+    echo
+    exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
+fi
+
+# Check required --tf_snowflake_user argument was supplied
+if [ -z $tf_snowflake_user ]
+then
+    echo
+    echo "(Error Message 007)  You did not include the proper use of the --tf_snowflake_user=<TF_SNOWFLAKE_USER> argument in the call."
+    echo
+    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake_account=<SNOWFLAKE_ACCOUNT> --snowflake_user=<SNOWFLAKE_USER> --snowflake_password=<SNOWFLAKE_PASSWORD> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --tf_snowflake_user=<TF_SNOWFLAKE_USER>"
+    echo
+    exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
+fi
+
+# Set the Snowflake environment credential variables that are
+# used by the Snowflalke CLI commands to authenticate
+export SNOWFLAKE_ACCOUNT="${snowflake_account}"
+export SNOWFLAKE_AUTHENTICATOR=JWT
+export SNOWFLAKE_USER=${snowflake_user}
+export SNOWFLAKE_PASSWORD=${snowflake_password}
+export SNOWFLAKE_WAREHOUSE=${snowflake_warehouse}
+
+# Set the AWS environment credential variables that are used
+# by the AWS CLI commands to authenicate
 aws sso login $AWS_PROFILE
 eval $(aws2-wrap $AWS_PROFILE --export)
 export AWS_REGION=$(aws configure get sso_region $AWS_PROFILE)
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
 
-# Export Terraform authentication information via environment variables so Terraform can authenticate
-# the Snowflake user
-export SNOWFLAKE_USER="${snowflake_username}"
-export SNOWFLAKE_AUTHENTICATOR=JWT
-export SNOWFLAKE_PRIVATE_KEY=`cat ${key_path}/snowflake_${snowflake_username}_key.p8`
-export SNOWFLAKE_ACCOUNT="${snowflake_account_locator}"
-
 # Create terraform.tfvars file
 printf "aws_account_id=\"${AWS_ACCOUNT_ID}\"\
-\naws_profile=\"${environment_name}\"\
+\naws_profile=\"${AWS_PROFILE}\"\
 \naws_region=\"${AWS_REGION}\"\
 \naws_access_key_id=\"${AWS_ACCESS_KEY_ID}\"\
 \naws_secret_access_key=\"${AWS_SECRET_ACCESS_KEY}\"\
 \naws_session_token=\"${AWS_SESSION_TOKEN}\"\
-\nsnowflake_account_locator=\"${snowflake_account_locator}\"\
+\nsnowflake_account=\"${snowflake_account_locator}\"\
 \nsnowflake_authenticator=\"JWT\"\
-\nsnowflake_username=\"${snowflake_username}\"" > terraform.tfvars
+\tf_snowflake_user=\"${tf_snowflake_user}\"" > terraform.tfvars
 
 terraform init
 

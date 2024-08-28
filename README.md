@@ -32,7 +32,9 @@
 
 [Snowflake's Terraforming Quickstart](https://quickstarts.snowflake.com/guide/terraforming_snowflake/index.html?index=..%2F..index#0)
 
-[Terraform Snowflake Provider Beta](https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest/docs)
+[Terraform Snowflake Provider Beta](https://registry.terraform.io/providers/Snowflake-Labs/snowflake/0.94.1)
 > *[Roadmap](https://github.com/Snowflake-Labs/terraform-provider-snowflake/blob/main/ROADMAP.md)*
 
 [Snowflake working with Apache Iceberg](https://docs.snowflake.com/en/user-guide/tables-iceberg)
+
+[Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/5.64.0)
