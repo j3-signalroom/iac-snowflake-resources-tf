@@ -68,5 +68,5 @@ resource "snowflake_grant_privileges_to_account_role" "user_grant" {
 resource "snowflake_grant_account_role" "grants" {
   provider  = snowflake.security_admin
   role_name = snowflake_role.role.name
-  user_name = var.service_account_user
+  user_name = snowflake_user.user.name
 }
