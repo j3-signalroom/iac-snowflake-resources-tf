@@ -31,20 +31,13 @@ variable "aws_session_token" {
     default     = ""
 }
 
-variable "snowflake_account_id" {
-    description = "Specifies the Snowflake Account ID."
+variable "snowflake_account" {
+    description = "The Snowflake Account identifer issued to your organization."
     type        = string
     default     = ""
 }
-
-variable "snowflake_login_url" {
-    description = "Specifies the Snowflake login URL."
-    type        = string
-    default     = ""
-}
-
-variable "snowflake_username" {
-    description = "Specifies the Snowflake user name."
+variable "snowflake_user" {
+    description = "The Snowflake User who is to be assigned the RSA key pairs for its authentication."
     type        = string
     default     = ""
 }
