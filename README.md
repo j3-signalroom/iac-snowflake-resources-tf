@@ -34,3 +34,5 @@
 
 [Terraform Snowflake Provider Beta](https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest/docs)
 > *[Roadmap](https://github.com/Snowflake-Labs/terraform-provider-snowflake/blob/main/ROADMAP.md)*
+
+[Snowflake working with Apache Iceberg](https://docs.snowflake.com/en/user-guide/tables-iceberg)
