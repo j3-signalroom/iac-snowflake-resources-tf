@@ -118,14 +118,6 @@ then
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
 fi
 
-# Set the Snowflake environment credential variables that are
-# used by the Snowflalke CLI commands to authenticate
-export SNOWFLAKE_ACCOUNT="${snowflake_account}"
-export SNOWFLAKE_AUTHENTICATOR=JWT
-export SNOWFLAKE_USER=${snowflake_user}
-export SNOWFLAKE_PASSWORD=${snowflake_password}
-export SNOWFLAKE_WAREHOUSE=${snowflake_warehouse}
-
 # Set the AWS environment credential variables that are used
 # by the AWS CLI commands to authenicate
 aws sso login $AWS_PROFILE
