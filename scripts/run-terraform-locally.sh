@@ -118,14 +118,6 @@ then
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
 fi
 
-# Set the Snowflake environment credential variables that are
-# used by the Snowflalke CLI commands to authenticate
-export SNOWFLAKE_ACCOUNT="${snowflake_account}"
-export SNOWFLAKE_AUTHENTICATOR=JWT
-export SNOWFLAKE_USER=${snowflake_user}
-export SNOWFLAKE_PASSWORD=${snowflake_password}
-export SNOWFLAKE_WAREHOUSE=${snowflake_warehouse}
-
 # Set the AWS environment credential variables that are used
 # by the AWS CLI commands to authenicate
 aws sso login $AWS_PROFILE
@@ -140,7 +132,10 @@ printf "aws_account_id=\"${AWS_ACCOUNT_ID}\"\
 \naws_access_key_id=\"${AWS_ACCESS_KEY_ID}\"\
 \naws_secret_access_key=\"${AWS_SECRET_ACCESS_KEY}\"\
 \naws_session_token=\"${AWS_SESSION_TOKEN}\"\
-\nsnowflake_account=\"${snowflake_account_locator}\"\
+\nsnowflake_account=\"${snowflake_account}\"\
+\nsnowflake_user=\"${snowflake_user}\"\
+\nsnowflake_password=\"${snowflake_password}\"\
+\nsnowflake_warehouse=\"${snowflake_warehouse}\"\
 \nservice_account_user=\"${service_account_user}\"" > terraform.tfvars
 
 terraform init

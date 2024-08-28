@@ -1,6 +1,9 @@
 provider "snowflake" {
-  alias = "security_admin"
-  role  = "SECURITYADMIN"
+  alias    = "security_admin"
+  role     = "SECURITYADMIN"
+  account  = var.snowflake_account
+  user     = var.snowflake_user
+  password = var.snowflake_password
 }
 
 resource "snowflake_role" "role" {
