@@ -36,14 +36,20 @@ variable "snowflake_account" {
     type        = string
     default     = ""
 }
-variable "snowflake_user" {
-    description = "The Snowflake User who is to be assigned the RSA key pairs for its authentication."
+variable "service_account_user" {
+    description = "The Snowflake service account user who is to be assigned the RSA key pairs for its authentication."
     type        = string
     default     = ""
 }
 
-variable "snowflake_password" {
-    description = "Specifies the Snowflake password."
-    type        = string
-    default     = ""
+variable "day_count" {
+    description = "How many day(s) should the RSA key pair be rotated for."
+    type = number
+    default = 30
+    
+    validation {
+        condition = var.day_count >= 1
+        error_message = "Rolling day count, `day_count`, must be greater than or equal to 1."
+    }
 }
+
