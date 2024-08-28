@@ -140,7 +140,10 @@ printf "aws_account_id=\"${AWS_ACCOUNT_ID}\"\
 \naws_access_key_id=\"${AWS_ACCESS_KEY_ID}\"\
 \naws_secret_access_key=\"${AWS_SECRET_ACCESS_KEY}\"\
 \naws_session_token=\"${AWS_SESSION_TOKEN}\"\
-\nsnowflake_account=\"${snowflake_account_locator}\"\
+\nsnowflake_account=\"${snowflake_account}\"\
+\nsnowflake_user=\"${snowflake_user}\"\
+\nsnowflake_password=\"${snowflake_password}\"\
+\nsnowflake_warehouse=\"${snowflake_warehouse}\"\
 \nservice_account_user=\"${service_account_user}\"" > terraform.tfvars
 
 terraform init

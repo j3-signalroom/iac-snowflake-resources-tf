@@ -36,6 +36,19 @@ variable "snowflake_account" {
     type        = string
     default     = ""
 }
+
+variable "snowflake_user" {
+    description = "The ACCOUNTADMIN Snowflake user."
+    type        = string
+    default     = ""
+}
+
+variable "snowflake_password" {
+    description = "The ACCOUNTADMIN Snowflake user's password."
+    type        = string
+    default     = ""
+}
+
 variable "service_account_user" {
     description = "The Snowflake service account user who is to be assigned the RSA key pairs for its authentication."
     type        = string
