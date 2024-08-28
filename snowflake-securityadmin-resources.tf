@@ -42,6 +42,9 @@ resource "snowflake_grant_privileges_to_account_role" "warehouse_grant" {
   }
 }
 
+data "snowflake_users" "service_account_user" {
+  pattern = var.service_account_user
+}
 
 resource "snowflake_user_public_keys" "user" {
     provider          = snowflake.security_admin
@@ -56,12 +59,12 @@ resource "snowflake_grant_privileges_to_account_role" "user_grant" {
   account_role_name = snowflake_role.role.name  
   on_account_object {
     object_type = "USER"
-    object_name = snowflake_user.user.name
+    object_name = var.service_account_user
   }
 }
 
 resource "snowflake_grant_account_role" "grants" {
   provider  = snowflake.security_admin
   role_name = snowflake_role.role.name
-  user_name = snowflake_user.user.name
+  user_name = var.service_account_user
 }
