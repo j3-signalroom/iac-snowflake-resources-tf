@@ -51,6 +51,10 @@ resource "snowflake_user" "user" {
   default_warehouse = snowflake_warehouse.warehouse.name
   default_role      = snowflake_role.role.name
   default_namespace = "${snowflake_database.database.name}.${snowflake_schema.schema.name}"
+
+  # Setting the attributes to `null`, effectively unsets the attribute
+  # Refer to this link `https://docs.snowflake.com/en/user-guide/key-pair-auth#configuring-key-pair-rotation`
+  # for more information
   rsa_public_key    = snowflake_user_rsa_key_pairs_rotation.active_rsa_public_key_number == 1 ? snowflake_user_rsa_key_pairs_rotation.active_rsa_public_key : null
   rsa_public_key_2  = snowflake_user_rsa_key_pairs_rotatio.nactive_rsa_public_key_number == 2 ? snowflake_user_rsa_key_pairs_rotation.active_rsa_public_key : null
 }
