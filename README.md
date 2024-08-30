@@ -13,7 +13,6 @@
 
 1. Take care of the cloud environment prequisities listed below:
     > You need to have the following cloud accounts:
-    > - [AWS Account](https://signin.aws.amazon.com/) *with SSO configured*
     > - [GitHub Account](https://github.com) *with OIDC configured for AWS*
     > - [Terraform Cloud Account](https://app.terraform.io/)
 
@@ -34,7 +33,3 @@
 
 [Terraform Snowflake Provider Beta](https://registry.terraform.io/providers/Snowflake-Labs/snowflake/0.94.1)
 > *[Roadmap](https://github.com/Snowflake-Labs/terraform-provider-snowflake/blob/main/ROADMAP.md)*
-
-[Snowflake working with Apache Iceberg](https://docs.snowflake.com/en/user-guide/tables-iceberg)
-
-[Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/5.64.0)

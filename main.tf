@@ -3,15 +3,11 @@ terraform {
       organization = "signalroom"
 
         workspaces {
-            name = "snowflake-resources-workspace-022"
+            name = "iac-snowflake-resources-workspace"
         }
   }
 
   required_providers {
-        aws = {
-            source  = "hashicorp/aws"
-            version = "~> 5.64.0"
-        }
         snowflake = {
             source  = "Snowflake-Labs/snowflake"
             version = "~> 0.94.1"

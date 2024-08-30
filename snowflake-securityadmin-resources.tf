@@ -46,13 +46,13 @@ resource "snowflake_grant_privileges_to_account_role" "warehouse_grant" {
 }
 
 resource "snowflake_user" "user" {
-    provider          = snowflake.security_admin
-    name              = var.service_account_user
-    default_warehouse = snowflake_warehouse.warehouse.name
-    default_role      = snowflake_role.role.name
-    default_namespace = "${snowflake_database.database.name}.${snowflake_schema.schema.name}"
-    rsa_public_key    = jsondecode(data.aws_secretsmanager_secret_version.snowflake_resource.secret_string)["rsa_public_key_1"]
-    rsa_public_key_2  = jsondecode(data.aws_secretsmanager_secret_version.snowflake_resource.secret_string)["rsa_public_key_2"]
+  provider          = snowflake.security_admin
+  name              = var.service_account_user
+  default_warehouse = snowflake_warehouse.warehouse.name
+  default_role      = snowflake_role.role.name
+  default_namespace = "${snowflake_database.database.name}.${snowflake_schema.schema.name}"
+  rsa_public_key    = snowflake_user_rsa_key_pairs_rotation.active_rsa_public_key_number == 1 ? snowflake_user_rsa_key_pairs_rotation.active_rsa_public_key : null
+  rsa_public_key_2  = snowflake_user_rsa_key_pairs_rotatio.nactive_rsa_public_key_number == 2 ? snowflake_user_rsa_key_pairs_rotation.active_rsa_public_key : null
 }
 
 resource "snowflake_grant_privileges_to_account_role" "user_grant" {
