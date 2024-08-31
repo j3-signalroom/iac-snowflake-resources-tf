@@ -11,10 +11,14 @@
 ## Let's get started!
 **These are the steps**
 
-1. Take care of the cloud environment prequisities listed below:
+1. Take care of the cloud and local environment prequisities listed below:
     > You need to have the following cloud accounts:
     > - [GitHub Account](https://github.com) *with OIDC configured for AWS*
+    > - [Snowflake Account](https://www.snowflake.com/en/)
     > - [Terraform Cloud Account](https://app.terraform.io/)
+
+    > You need to have the following installed on your local machine:
+    > - [Terraform CLI version 1.85 or higher](https://developer.hashicorp.com/terraform/install)
 
 2. Clone the repo:
     ```shell
