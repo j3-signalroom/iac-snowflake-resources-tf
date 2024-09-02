@@ -26,6 +26,14 @@ on:
           - us-east-2
           - us-west-1
           - us-west-2
+      snowflake_warehouse:
+        type: string
+        description: Snowflake Warehouse
+        required: true
+      service_account_user:
+        type: string
+        description: Snowflake Service Account User
+        required: true
       day_count:
         type: number
         default: 30
