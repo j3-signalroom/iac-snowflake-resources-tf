@@ -1,0 +1,90 @@
+name: Deploy
+
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout  
+
+on:
+  workflow_dispatch:
+    inputs:
+      aws_environment:
+        type: choice
+        description: AWS Environment
+        required: true
+        default: dev
+        options:
+          - dev
+          - test
+          - prod
+      aws_region:
+        type: choice
+        description: AWS Region
+        required: true
+        default: us-east-1
+        options:
+          - us-east-1
+          - us-east-2
+          - us-west-1
+          - us-west-2
+      snowflake_warehouse:
+        type: string
+        description: Snowflake Warehouse
+        required: true
+      service_account_user:
+        type: string
+        description: Snowflake Service Account User
+        required: true
+      day_count:
+        type: number
+        default: 30
+        description: Rotation Day Count
+        required: true
+
+run-name: ${{ github.workflow }} ${{ github.ref_name }} branch to the ${{ github.event.inputs.aws_region }} ${{ github.event.inputs.aws_environment }} environment
+
+jobs:
+  deploy:
+    name: "deploy terraform configuration"
+    runs-on: ${{ github.event.inputs.aws_environment }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get AWS Environment Info
+        id: aws-environment-info
+        uses: ./.github/actions/aws-environment-info
+        with:
+          aws_environment: ${{ github.event.inputs.aws_environment }}
+          aws_dev_account_id: ${{ vars.AWS_DEV_ACCOUNT_ID }}
+          aws_test_account_id: ${{ vars.AWS_TEST_ACCOUNT_ID }}
+          aws_prod_account_id: ${{ vars.AWS_PROD_ACCOUNT_ID }}
+          aws_region: ${{ github.event.inputs.aws_region }}
+          day_count: ${{ github.event.inputs.day_count }}
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Init
+        id: init
+        run:  terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan
+        env:
+          TF_VAR_aws_account_id: ${{ steps.aws-environment-info.outputs.aws_account_id }}
+          TF_VAR_aws_region: ${{ github.event.inputs.aws_region }}
+          TF_VAR_day_count: ${{ github.event.inputs.day_count }}
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve
+        env:
+          TF_VAR_aws_account_id: ${{ steps.aws-environment-info.outputs.aws_account_id }}
+          TF_VAR_aws_region: ${{ github.event.inputs.aws_region }}
+          TF_VAR_day_count: ${{ github.event.inputs.day_count }}

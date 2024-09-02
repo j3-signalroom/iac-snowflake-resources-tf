@@ -127,7 +127,6 @@ export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output t
 
 # Create terraform.tfvars file
 printf "aws_account_id=\"${AWS_ACCOUNT_ID}\"\
-\naws_profile=\"${AWS_PROFILE}\"\
 \naws_region=\"${AWS_REGION}\"\
 \naws_access_key_id=\"${AWS_ACCESS_KEY_ID}\"\
 \naws_secret_access_key=\"${AWS_SECRET_ACCESS_KEY}\"\
