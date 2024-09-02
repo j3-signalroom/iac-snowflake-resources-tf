@@ -45,7 +45,7 @@ jobs:
             aws_test_account_id: ${{ vars.AWS_TEST_ACCOUNT_ID }}
             aws_prod_account_id: ${{ vars.AWS_PROD_ACCOUNT_ID }}
             aws_region: ${{ github.event.inputs.aws_region }}
-
+  
         - uses: hashicorp/setup-terraform@v3
           with:
             cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
