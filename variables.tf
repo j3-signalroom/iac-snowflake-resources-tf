@@ -23,11 +23,6 @@ variable "aws_session_token" {
     type        = string
 }
 
-variable "snowflake_account" {
-    description = "The Snowflake Account identifer issued to your organization."
-    type        = string
-}
-
 variable "snowflake_warehouse" {
     description = "The Snowflake warehouse."
     type        = string
