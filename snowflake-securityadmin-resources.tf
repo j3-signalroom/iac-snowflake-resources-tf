@@ -1,9 +1,9 @@
 provider "snowflake" {
-  alias    = "security_admin"
-  role     = "SECURITYADMIN"
-  account  = var.snowflake_account
-  user     = var.snowflake_user
-  password = var.snowflake_password
+  alias       = "security_admin"
+  role        = "SECURITYADMIN"
+  account     = jsondecode(data.aws_secretsmanager_secret_version.public_keys.secret_string)["account"]
+  user        = jsondecode(data.aws_secretsmanager_secret_version.public_keys.secret_string)["admin_user"]
+  private_key = jsondecode(data.aws_secretsmanager_secret_version.public_keys.secret_string)["active_rsa_public_key_number"] == 1 ? aws_secretsmanager_secret_version.private_key_1.secret_string : aws_secretsmanager_secret_version.private_key_2.secret_string
 }
 
 resource "snowflake_role" "role" {
