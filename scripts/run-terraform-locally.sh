@@ -120,7 +120,7 @@ then
     \naws_session_token=\"${AWS_SESSION_TOKEN}\"\
     \nsnowflake_account=\"${snowflake_account}\"\
     \nsnowflake_warehouse=\"${snowflake_warehouse}\"\
-    \nday_count=${day_count}"\
+    \nday_count=${day_count}\
     \nservice_account_user=\"${service_account_user}\"" > terraform.tfvars
 else
     printf "aws_account_id=\"${AWS_ACCOUNT_ID}\"\

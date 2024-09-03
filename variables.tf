@@ -28,17 +28,6 @@ variable "snowflake_account" {
     type        = string
 }
 
-variable "snowflake_user" {
-    description = "The ACCOUNTADMIN Snowflake user."
-    type        = string
-}
-
-variable "snowflake_password" {
-    description = "The ACCOUNTADMIN Snowflake user's password."
-    type        = string
-    sensitive = true
-}
-
 variable "snowflake_warehouse" {
     description = "The Snowflake warehouse."
     type        = string
@@ -59,4 +48,3 @@ variable "day_count" {
         error_message = "Rolling day count, `day_count`, must be greater than or equal to 1."
     }
 }
-
