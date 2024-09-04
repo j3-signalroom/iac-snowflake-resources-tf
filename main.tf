@@ -3,7 +3,7 @@ terraform {
       organization = "signalroom"
 
         workspaces {
-            name = "snowflake-resources-workspace-001"
+            name = "snowflake-resources-workspace-007"
         }
   }
 
@@ -26,9 +26,12 @@ module "snowflake_user_rsa_key_pairs_rotation" {
     # Required Input(s)
     aws_region           = var.aws_region
     aws_account_id       = var.aws_account_id
-    snowflake_account    = jsondecode(data.aws_secretsmanager_secret_version.public_keys.secret_string)["account"]
+    snowflake_account    = jsondecode(data.aws_secretsmanager_secret_version.admin_public_keys.secret_string)["account"]
     service_account_user = var.service_account_user
 
     # Optional Input(s)
-    day_count = var.day_count
+    day_count                 = var.day_count
+    aws_lambda_memory_size    = var.aws_lambda_memory_size
+    aws_lambda_timeout        = var.aws_lambda_timeout
+    aws_log_retention_in_days = var.aws_log_retention_in_days
 }
