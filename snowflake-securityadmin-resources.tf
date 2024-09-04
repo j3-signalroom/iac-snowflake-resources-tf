@@ -1,9 +1,10 @@
 provider "snowflake" {
-  alias       = "security_admin"
-  role        = "SECURITYADMIN"
-  account     = jsondecode(data.aws_secretsmanager_secret_version.public_keys.secret_string)["account"]
-  user        = jsondecode(data.aws_secretsmanager_secret_version.public_keys.secret_string)["admin_user"]
-  private_key = jsondecode(data.aws_secretsmanager_secret_version.public_keys.secret_string)["active_rsa_public_key_number"] == 1 ? aws_secretsmanager_secret_version.private_key_1.secret_string : aws_secretsmanager_secret_version.private_key_2.secret_string
+  alias         = "security_admin"
+  role          = "SECURITYADMIN"
+  account       = jsondecode(data.aws_secretsmanager_secret_version.public_keys.secret_string)["account"]
+  user          = jsondecode(data.aws_secretsmanager_secret_version.public_keys.secret_string)["admin_user"]
+  authenticator = "JWT"
+  private_key   = jsondecode(data.aws_secretsmanager_secret_version.public_keys.secret_string)["active_rsa_public_key_number"] == 1 ? data.aws_secretsmanager_secret_version.private_key_1.secret_string : data.aws_secretsmanager_secret_version.private_key_2.secret_string
 }
 
 resource "snowflake_role" "role" {
@@ -55,8 +56,8 @@ resource "snowflake_user" "user" {
   # Setting the attributes to `null`, effectively unsets the attribute
   # Refer to this link `https://docs.snowflake.com/en/user-guide/key-pair-auth#configuring-key-pair-rotation`
   # for more information
-  rsa_public_key    = snowflake_user_rsa_key_pairs_rotation.active_rsa_public_key_number == 1 ? snowflake_user_rsa_key_pairs_rotation.active_rsa_public_key : null
-  rsa_public_key_2  = snowflake_user_rsa_key_pairs_rotatio.nactive_rsa_public_key_number == 2 ? snowflake_user_rsa_key_pairs_rotation.active_rsa_public_key : null
+  rsa_public_key    = module.snowflake_user_rsa_key_pairs_rotation.active_rsa_public_key_number == 1 ? data.aws_secretsmanager_secret_version.private_key_1.secret_string : null
+  rsa_public_key_2  = module.snowflake_user_rsa_key_pairs_rotation.active_rsa_public_key_number == 2 ? data.aws_secretsmanager_secret_version.private_key_2.secret_string : null
 }
 
 resource "snowflake_grant_privileges_to_account_role" "user_grant" {

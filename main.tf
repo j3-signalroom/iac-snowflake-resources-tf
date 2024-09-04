@@ -3,7 +3,7 @@ terraform {
       organization = "signalroom"
 
         workspaces {
-            name = "iac-snowflake-resources-workspace-022"
+            name = "snowflake-resources-workspace-001"
         }
   }
 
@@ -19,14 +19,14 @@ terraform {
     }
 }
 
-# Create the Snowflake user RSA key pairs
+# Create the Snowflake user RSA keys pairs
 module "snowflake_user_rsa_key_pairs_rotation" {   
     source  = "github.com/j3-signalroom/iac-snowflake-user-rsa_key_pairs_rotation-tf_module"
 
     # Required Input(s)
     aws_region           = var.aws_region
     aws_account_id       = var.aws_account_id
-    snowflake_account    = var.snowflake_account
+    snowflake_account    = jsondecode(data.aws_secretsmanager_secret_version.public_keys.secret_string)["account"]
     service_account_user = var.service_account_user
 
     # Optional Input(s)
