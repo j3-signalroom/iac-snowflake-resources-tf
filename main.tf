@@ -3,7 +3,7 @@ terraform {
       organization = "signalroom"
 
         workspaces {
-            name = "snowflake-resources-workspace-007"
+            name = "iac-snowflake-resources-workspace"
         }
   }
 
