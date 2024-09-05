@@ -126,4 +126,9 @@ then
 else
     # Destroy the Terraform configuration
     terraform destroy -var-file=terraform.tfvars
+
+    # Delete the secrets created by the Terraform configuration
+    aws secretsmanager delete-secret --secret-id '/snowflake_resource' --force-delete-without-recovery || true
+    aws secretsmanager delete-secret --secret-id '/snowflake_resource/rsa_private_key_pem_1' --force-delete-without-recovery || true
+    aws secretsmanager delete-secret --secret-id '/snowflake_resource/rsa_private_key_pem_2' --force-delete-without-recovery || true
 fi
