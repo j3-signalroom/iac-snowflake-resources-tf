@@ -92,6 +92,7 @@ jobs:
           TF_VAR_aws_access_key_id: ${{ steps.aws-credentials.outputs.aws-access-key-id }}
           TF_VAR_aws_secret_access_key: ${{ steps.aws-credentials.outputs.aws-secret-access-key }}
           TF_VAR_aws_session_token: ${{ steps.aws-credentials.outputs.aws-session-token }}
+          TF_VAR_service_account_user: ${{ github.event.inputs.service_account_user }}
           TF_VAR_day_count: ${{ github.event.inputs.day_count }}
 
       - name: Terraform Apply
@@ -103,4 +104,5 @@ jobs:
           TF_VAR_aws_access_key_id: ${{ steps.aws-credentials.outputs.aws-access-key-id }}
           TF_VAR_aws_secret_access_key: ${{ steps.aws-credentials.outputs.aws-secret-access-key }}
           TF_VAR_aws_session_token: ${{ steps.aws-credentials.outputs.aws-session-token }}
+          TF_VAR_service_account_user: ${{ github.event.inputs.service_account_user }}
           TF_VAR_day_count: ${{ github.event.inputs.day_count }}

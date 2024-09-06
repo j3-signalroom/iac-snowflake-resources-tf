@@ -25,6 +25,10 @@ on:
           - us-east-2
           - us-west-1
           - us-west-2
+      service_account_user:
+        type: string
+        description: Snowflake Service Account User
+        required: true
 
 run-name: ${{ github.workflow }} ${{ github.ref_name }} branch to the ${{ github.event.inputs.aws_region }} ${{ github.event.inputs.aws_environment }} environment
 
@@ -75,6 +79,7 @@ jobs:
             TF_VAR_aws_access_key_id: ${{ steps.aws-credentials.outputs.aws-access-key-id }}
             TF_VAR_aws_secret_access_key: ${{ steps.aws-credentials.outputs.aws-secret-access-key }}
             TF_VAR_aws_session_token: ${{ steps.aws-credentials.outputs.aws-session-token }}
+            TF_VAR_service_account_user: ${{ github.event.inputs.service_account_user }}
     
         - name: Terraform Destroy Apply
           id: apply_destroy
@@ -85,4 +90,5 @@ jobs:
             TF_VAR_aws_access_key_id: ${{ steps.aws-credentials.outputs.aws-access-key-id }}
             TF_VAR_aws_secret_access_key: ${{ steps.aws-credentials.outputs.aws-secret-access-key }}
             TF_VAR_aws_session_token: ${{ steps.aws-credentials.outputs.aws-session-token }}
+            TF_VAR_service_account_user: ${{ github.event.inputs.service_account_user }}
   
