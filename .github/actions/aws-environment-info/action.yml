@@ -18,9 +18,9 @@ inputs:
   aws_region:
     required: true
   snowflake_warehouse:
-    required: false
+    required: true
   service_account_user:
-    required: false
+    required: true
   day_count:
     required: false
 outputs:
