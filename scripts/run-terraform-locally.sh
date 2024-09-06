@@ -36,7 +36,7 @@ do
         *"--snowflake_warehouse="*)
             arg_length=22
             snowflake_warehouse=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
-         *"--day_count="*)
+        *"--day_count="*)
             arg_length=12
             day_count=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
         *"--service_account_user="*)
@@ -44,6 +44,7 @@ do
             service_account_user=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
     esac
 done
+
 # Check required --profile argument was supplied
 if [ -z $AWS_PROFILE ]
 then
