@@ -5,7 +5,7 @@ The format is base on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), 
 
 ## [0.31.00.000] - 2024-09-05
 ### Changed
-- Upgraded the version of Terraform AWS Provider to `5.65.0`, and Terraform Snowflake Provider to `0.95.0`.
+- Upgraded the version of Terraform AWS Provider to `5.66.0`, and Terraform Snowflake Provider to `0.95.0`.
 
 ## [0.30.00.000] - 2024-09-04
 ### Added
