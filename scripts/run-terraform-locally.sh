@@ -4,8 +4,8 @@
 # *** Script Syntax ***
 # scripts/run-terraform-locally.sh <create | delete> --profile=<SSO_PROFILE_NAME> \
 #                                                    --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> \
-#                                                    --day_count=<DAY_COUNT> \
-#                                                    --service_account_user=<SERVICE_ACCOUNT_USER>
+#                                                    --service_account_user=<SERVICE_ACCOUNT_USER> \
+#                                                    --day_count=<DAY_COUNT>
 #
 #
 

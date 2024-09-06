@@ -51,6 +51,56 @@ To protect sensitive credentials, the configuration securely stores the generate
 
     b. In the `terraform.cloud.workspaces` block, replace **`iac-snowflake-resources-workspace`** with your [Terraform Cloud Organization's Workspaces Name](https://developer.hashicorp.com/terraform/cloud-docs/workspaces).
 
+6. To run repo's [Terraform configuration](main.tf) locally, follow these steps:
+
+    a. Navigate to the root folder of the `iac-snowflake-resources-tf/` repository that you cloned.
+
+    b. Open a terminal in this directory.
+
+    c. Execute the following [script](scripts/run-terraform-locally.sh):
+    ```shell
+    scripts/run-terraform-locally.sh <create | delete> --profile=<SSO_PROFILE_NAME> \
+                                                       --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> \
+                                                       --service_account_user=<SERVICE_ACCOUNT_USER> \
+                                                       --day_count=<DAY_COUNT>
+    ```
+    Argument placeholder|Replace with
+    -|-
+    `<SSO_PROFILE_NAME>`|your AWS SSO profile name for your AWS infrastructue that host your AWS Secrets Manager.
+    `<SNOWFLAKE_WAREHOUSE>`|the Snowflake warehouse (or "virtual warehouse") you choose to run the resources in Snowflake.
+    `<SERVICE_ACCOUNT_USER>`|the Snowflake service account user who is to be assigned the RSA key pairs for its authentication.
+    `<DAY_COUNT>`|how many day(s) should the RSA key pairs be rotated for.
+
+7. Or, to run the repository's Terraform configuration from GitHub, follow these steps:
+
+    a. **Deploy the Repository**: Ensure that you have cloned or forked the repository to your GitHub account.
+
+    b. **Set Required Secrets and Variables**: Before running any of the GitHub workflows provided in the repository, you must define at least the `AWS_DEV_ACCOUNT_ID` variable (which should contain your AWS Account ID for your development environment). To do this:
+
+    - Go to the **Settings** of your cloned or forked repository in GitHub.
+
+    - Navigate to **Secrets and Variables** > **Actions**.
+
+    - Add the `AWS_DEV_ACCOUNT_ID` and any other required variables or secrets.
+
+    c. **Navigate to the Actions Page**:
+
+    - From the cloned or forked repository on GitHub, click on the **Actions** tab.
+
+    d. **Select and Run the Deploy Workflow**:
+
+    - Find the **Deploy workflow** link on the left side of the Actions page and click on it.
+
+        ![github-actions-screenshot](.blog/images/github-actions-screenshot.png)
+
+    - On the **Deploy workflow** page, click the **Run workflow** button.
+
+    - A workflow dialog box will appear. Fill in the necessary details and click **Run workflow** to initiate the Terraform deployment process.
+
+        ![github-run-deploy-workflow-screenshot](.blog/images/github-run-deploy-workflow-screenshot.png)
+
+    By following these steps, you will run the Terraform configuration directly from GitHub, leveraging GitHub Actions for automation and deployment.
+
 ## Resources
 
 [Snowflake's Terraforming Quickstart](https://quickstarts.snowflake.com/guide/terraforming_snowflake/index.html?index=..%2F..index#0)
