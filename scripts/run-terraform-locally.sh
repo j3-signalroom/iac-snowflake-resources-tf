@@ -60,7 +60,7 @@ fi
 if [ -z $snowflake_warehouse ]
 then
     echo
-    echo "(Error Message 003)  You did not include the proper use of the --snowflake_user=<SNOWFLAKE_WAREHOUSE> argument in the call."
+    echo "(Error Message 003)  You did not include the proper use of the --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> argument in the call."
     echo
     echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --day_count=<DAY_COUNT> --service_account_user=<SERVICE_ACCOUNT_USER>"
     echo

@@ -17,8 +17,6 @@ inputs:
     description: 'The AWS Prod Account ID'
   aws_region:
     required: true
-  snowflake_user:
-    required: false
   snowflake_warehouse:
     required: false
   service_account_user:
@@ -62,7 +60,6 @@ runs:
         echo "aws_environment  : ${{ inputs.aws_environment }}" >> $GITHUB_STEP_SUMMARY
         echo "aws_account_id   : ${{ env.AWS_ACCOUNT_ID }}" >> $GITHUB_STEP_SUMMARY        
         echo "aws_region       : ${{ inputs.aws_region }}" >> $GITHUB_STEP_SUMMARY
-        echo "snowflake_user      : ${{ inputs.snowflake_user }}" >> $GITHUB_STEP_SUMMARY
         echo "snowflake_warehouse : ${{ inputs.snowflake_warehouse }}" >> $GITHUB_STEP_SUMMARY
         echo "service_account_user: ${{ inputs.service_account_user }}" >> $GITHUB_STEP_SUMMARY
         echo "day_count           : ${{ inputs.day_count }}" >> $GITHUB_STEP_SUMMARY
