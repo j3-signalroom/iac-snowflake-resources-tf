@@ -10,11 +10,11 @@ To protect sensitive credentials, the configuration securely stores the generate
 **Table of Contents**
 
 <!-- toc -->
-+ [Let's get started!](#lets-get-started)
-+ [Resources](#resources)
++ [1.0 Let's get started!](#10-lets-get-started)
++ [2.0 Resources](#20-resources)
 <!-- tocstop -->
 
-## Let's get started!
+## 1.0 Let's get started!
 **These are the steps**
 
 1. Take care of the cloud and local environment prequisities listed below:
@@ -101,9 +101,9 @@ To protect sensitive credentials, the configuration securely stores the generate
 
     By following these steps, you will run the Terraform configuration directly from GitHub, leveraging GitHub Actions for automation and deployment.
 
-## Resources
+## 2.0 Resources
 
 [Snowflake's Terraforming Quickstart](https://quickstarts.snowflake.com/guide/terraforming_snowflake/index.html?index=..%2F..index#0)
 
-[Terraform Snowflake Provider Beta](https://registry.terraform.io/providers/Snowflake-Labs/snowflake/0.94.1)
+[Terraform Snowflake Provider Beta `0.97.0`](https://registry.terraform.io/providers/Snowflake-Labs/snowflake/0.97.0)
 > *[Roadmap](https://github.com/Snowflake-Labs/terraform-provider-snowflake/blob/main/ROADMAP.md)*
