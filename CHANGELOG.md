@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is base on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.37.00.000] - 2024-11-22
+### Added
+- [Issue #66](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/66)
+
+### Changed
+- [Issue #67](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/67)
+
+## [0.37.00.000] - 2024-11-22
 ### Changed
 - Upgraded the version of Terraform AWS Provider to `5.77.0`, and Terraform Snowflake Provider to `0.98.0`.
 
