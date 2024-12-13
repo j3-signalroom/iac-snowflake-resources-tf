@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is base on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.40.00.000] - 2024-12-13
+### Added
+- [Issue #74](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/74)
+
 ## [0.39.00.000] - 2024-11-27
 ### Added
 - [Issue #70](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/70)
