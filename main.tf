@@ -14,11 +14,11 @@ terraform {
   required_providers {
         aws = {
             source  = "hashicorp/aws"
-            version = "~> 5.92.0"
+            version = "~> 5.94.1"
         }
         snowflake = {
             source  = "Snowflake-Labs/snowflake"
-            version = "~> 1.0.4"
+            version = "~> 1.0.5"
         }
     }
 }
