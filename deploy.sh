@@ -2,10 +2,10 @@
 
 #
 # *** Script Syntax ***
-# scripts/run-terraform-locally.sh <create | delete> --profile=<SSO_PROFILE_NAME> \
-#                                                    --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> \
-#                                                    --service_account_user=<SERVICE_ACCOUNT_USER> \
-#                                                    --day_count=<DAY_COUNT>
+# ./deploy.sh <create | delete> --profile=<SSO_PROFILE_NAME> \
+#                               --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> \
+#                               --service_account_user=<SERVICE_ACCOUNT_USER> \
+#                               --day_count=<DAY_COUNT>
 #
 #
 

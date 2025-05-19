@@ -1,7 +1,7 @@
 # IaC Snowflake Resources Terraform Configuration
 [Terraform](https://terraform.io), an open-source Infrastructure as Code (IaC) tool developed by HashiCorp, uses a declarative approach for managing infrastructure resources. Unlike imperative programming languages like Java, which require explicit, sequential commands to achieve a specific outcome, Terraform enables users to define their desired infrastructure state through configuration files using a YAML-like syntax. This approach abstracts the complexity of manual infrastructure management by allowing users to focus on "what" the final state should be rather than "how" to achieve it.
 
-With Terraform, users can efficiently manage a wide range of [Snowflake resources](https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest)—including Warehouses, Databases, Schemas, Tables, and Roles/Grants—by defining their desired state in configuration files. Terraform maintains a detailed record of the current state of these resources and compares it against the desired state specified by the user. Based on this comparison, Terraform automatically generates a reconciliation plan to bring the existing infrastructure into alignment with the desired configuration. This process involves creating, updating, or deleting resources as needed, enabling consistent, repeatable, and predictable management of infrastructure components.
+With Terraform, users can efficiently manage a wide range of [Snowflake resources](https://registry.terraform.io/providers/snowflakedb/snowflake/latest/docs)—including Warehouses, Databases, Schemas, Tables, and Roles/Grants—by defining their desired state in configuration files. Terraform maintains a detailed record of the current state of these resources and compares it against the desired state specified by the user. Based on this comparison, Terraform automatically generates a reconciliation plan to bring the existing infrastructure into alignment with the desired configuration. This process involves creating, updating, or deleting resources as needed, enabling consistent, repeatable, and predictable management of infrastructure components.
 
 The configuration leverages the [IaC Snowflake User RSA key pairs Rotation Terraform module](https://github.com/j3-signalroom/iac-snowflake-user-rsa_key_pairs_rotation-tf_module) to automate the creation and rotation of [RSA key pairs](https://github.com/j3-signalroom/j3-techstack-lexicon/blob/main/cryptographic-glossary.md#rsa-key-pair) for a Snowflake service account user. This module ensures that each RSA key pair is securely rotated based on a defined schedule, reducing the risk of credential compromise and improving the overall security of the data streaming environment.
 
@@ -24,7 +24,7 @@ To protect sensitive credentials, the configuration securely stores the generate
     > - [Terraform Cloud Account](https://app.terraform.io/)
 
     > You need to have the following installed on your local machine:
-    > - [Terraform CLI version 1.85 or higher](https://developer.hashicorp.com/terraform/install)
+    > - [Terraform CLI version 1.12 or newer](https://developer.hashicorp.com/terraform/install)
 
 2. Clone the repo:
     ```bash
@@ -57,12 +57,12 @@ To protect sensitive credentials, the configuration securely stores the generate
 
     b. Open a terminal in this directory.
 
-    c. Execute the following [script](scripts/run-terraform-locally.sh):
+    c. Execute the following [script](./deploy.sh):
     ```shell
-    scripts/run-terraform-locally.sh <create | delete> --profile=<SSO_PROFILE_NAME> \
-                                                       --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> \
-                                                       --service_account_user=<SERVICE_ACCOUNT_USER> \
-                                                       --day_count=<DAY_COUNT>
+    ./deploy.sh <create | delete> --profile=<SSO_PROFILE_NAME> \
+                                  --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> \
+                                  --service_account_user=<SERVICE_ACCOUNT_USER> \
+                                  --day_count=<DAY_COUNT>
     ```
     Argument placeholder|Replace with
     -|-
@@ -103,7 +103,6 @@ To protect sensitive credentials, the configuration securely stores the generate
 
 ## 2.0 Resources
 
-[Snowflake's Terraforming Quickstart](https://quickstarts.snowflake.com/guide/terraforming_snowflake/index.html?index=..%2F..index#0)
+* [Snowflake Terraform Provider](https://registry.terraform.io/providers/snowflakedb/snowflake/latest/docs)
 
-[Terraform Snowflake Provider Beta `0.97.0`](https://registry.terraform.io/providers/Snowflake-Labs/snowflake/0.97.0)
-> *[Roadmap](https://github.com/Snowflake-Labs/terraform-provider-snowflake/blob/main/ROADMAP.md)*
+* [Terraforming Snowflake Quickstart](https://quickstarts.snowflake.com/guide/terraforming_snowflake/index.html?index=..%2F..index#0)
