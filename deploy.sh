@@ -128,8 +128,16 @@ else
     # Destroy the Terraform configuration
     terraform destroy -var-file=terraform.tfvars
 
-    # Delete the secrets created by the Terraform configuration
-    aws secretsmanager delete-secret --secret-id '/snowflake_resource' --force-delete-without-recovery || true
-    aws secretsmanager delete-secret --secret-id '/snowflake_resource/rsa_private_key_pem_1' --force-delete-without-recovery || true
-    aws secretsmanager delete-secret --secret-id '/snowflake_resource/rsa_private_key_pem_2' --force-delete-without-recovery || true
+    # Snowflake Paths
+    snowflake_root=/snowflake_resource
+    snowflake_base_path=${snowflake_root}/${service_account_user}
+
+    # Force the delete of the AWS Secrets
+    aws secretsmanager delete-secret --secret-id ${snowflake_root}/rsa_private_key_1 --force-delete-without-recovery || true
+    aws secretsmanager delete-secret --secret-id ${snowflake_root}/rsa_private_key_2 --force-delete-without-recovery || true
+    aws secretsmanager delete-secret --secret-id ${snowflake_base_path} --force-delete-without-recovery || true
+    aws secretsmanager delete-secret --secret-id ${snowflake_base_path}/rsa_private_key_pem_1 --force-delete-without-recovery || true
+    aws secretsmanager delete-secret --secret-id ${snowflake_base_path}/rsa_private_key_pem_2 --force-delete-without-recovery || true
+    aws secretsmanager delete-secret --secret-id ${snowflake_base_path}/rsa_private_key_1 --force-delete-without-recovery || true
+    aws secretsmanager delete-secret --secret-id ${snowflake_base_path}/rsa_private_key_2 --force-delete-without-recovery || true
 fi
