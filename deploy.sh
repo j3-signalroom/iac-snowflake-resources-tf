@@ -130,7 +130,7 @@ else
 
     # Snowflake Paths
     snowflake_root=/snowflake_resource
-    snowflake_base_path=${snowflake_root}/${service_account_user}
+    snowflake_base_path=${snowflake_root}/$(echo $service_account_user | tr '[:upper:]' '[:lower:]')
 
     # Force the delete of the AWS Secrets
     aws secretsmanager delete-secret --secret-id ${snowflake_root}/rsa_private_key_1 --force-delete-without-recovery || true
