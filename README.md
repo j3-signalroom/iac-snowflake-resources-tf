@@ -36,11 +36,11 @@ To protect sensitive credentials, the configuration securely stores the generate
 
 3. Clone the repo:
     ```bash
-    git clone https://github.com/j3-signalroom/iac-snowflake-user-rsa_key_pairs_generator-lambda.git
+    git clone https://github.com/j3-signalroom/iac-snowflake-user-rsa_key_pairs_and_jwt_generator-lambda.git
     ```
 
-    Then refer to [`iac-snowflake-user-rsa_key_pairs_generator-lambda README`](https://github.com/j3-signalroom/iac-snowflake-user-rsa_key_pairs_generator-lambda) to set it up.
- 
+    Then refer to [`iac-snowflake-user-rsa_key_pairs_and_jwt_generator-lambda README`](https://github.com/j3-signalroom/iac-snowflake-user-rsa_key_pairs_and_jwt_generator-lambda) to set it up.
+
 4. Clone the repo:
     ```shell
     git clone https://github.com/j3-signalroom/iac-snowflake-resources-tf.git
