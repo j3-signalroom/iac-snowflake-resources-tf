@@ -25,7 +25,7 @@ module "snowflake_user_rsa_key_pairs_rotation" {
 
     # Required Input(s)
     aws_region           = var.aws_region
-    account_identifier   = jsondecode(data.aws_secretsmanager_secret_version.admin_public_keys.secret_string)["account"]
+    account_identifier   = local.account_identifier
     snowflake_user       = var.snowflake_user
     secrets_path         = var.secrets_path
     lambda_function_name = var.lambda_function_name
@@ -125,9 +125,4 @@ resource "snowflake_user_programmatic_access_token" "pat" {
     snowflake_user.user,
     snowflake_account_role.role
   ]
-}
-
-output "token" {
-  value     = snowflake_user_programmatic_access_token.pat.token
-  sensitive = true
 }
