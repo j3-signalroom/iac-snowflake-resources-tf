@@ -115,14 +115,3 @@ resource "snowflake_warehouse" "example" {
   warehouse_size = "xsmall"
   auto_suspend   = 60
 }
-
-resource "snowflake_user_programmatic_access_token" "pat" {
-  user             = snowflake_user.user.name
-  name             = upper("${var.snowflake_user}_PAT")
-  role_restriction = snowflake_account_role.role.name
-
-  depends_on = [ 
-    snowflake_user.user,
-    snowflake_account_role.role
-  ]
-}
