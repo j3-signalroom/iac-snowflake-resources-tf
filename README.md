@@ -29,10 +29,10 @@ To protect sensitive credentials, the configuration securely stores the generate
 
 2. Clone the repo:
     ```bash
-    git clone https://github.com/j3-signalroom/create-snowflake_admin_user-with_rsa_key_pair_authentication.git
+    git clone https://github.com/j3-signalroom/snowflake_admin_user_rsa_key_credentials_creation-script.git
     ```
 
-    Then refer to [`create-snowflake_admin_user-with_rsa_key_pair_authentication README`](https://github.com/j3-signalroom/snowflake_admin_service_account_user) to set it up.
+    Then refer to [`snowflake_admin_user_rsa_key_credentials_creation-script README`](https://github.com/j3-signalroom/snowflake_admin_user_rsa_key_credentials_creation-script) to set it up.
 
 3. Clone the repo:
     ```bash
