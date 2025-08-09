@@ -24,17 +24,17 @@ module "snowflake_user_rsa_key_pairs_rotation" {
     source  = "github.com/j3-signalroom/iac-snowflake-user-rsa_key_pairs_rotation-tf_module"
 
     # Required Input(s)
-    aws_region           = var.aws_region
-    account_identifier   = local.account_identifier
-    snowflake_user       = var.snowflake_user
-    secrets_path         = var.secrets_path
-    lambda_function_name = var.lambda_function_name
+    aws_region                   = var.aws_region
+    snowflake_account_identifier = local.snowflake_account_identifier
+    snowflake_user               = var.snowflake_user
+    secrets_path                 = var.secrets_path
+    lambda_function_name         = var.lambda_function_name
 
     # Optional Input(s)
-    day_count                 = var.day_count
-    aws_lambda_memory_size    = var.aws_lambda_memory_size
-    aws_lambda_timeout        = var.aws_lambda_timeout
-    aws_log_retention_in_days = var.aws_log_retention_in_days
+    day_count                    = var.day_count
+    aws_lambda_memory_size       = var.aws_lambda_memory_size
+    aws_lambda_timeout           = var.aws_lambda_timeout
+    aws_log_retention_in_days    = var.aws_log_retention_in_days
 }
 
 resource "snowflake_account_role" "role" {
@@ -86,8 +86,8 @@ resource "snowflake_user" "user" {
   # Setting the attributes to `null`, effectively unsets the attribute
   # Refer to this link `https://docs.snowflake.com/en/user-guide/key-pair-auth#configuring-key-pair-rotation`
   # for more information
-  rsa_public_key    = module.snowflake_user_rsa_key_pairs_rotation.key_number == 1 ? module.snowflake_user_rsa_key_pairs_rotation.snowflake_rsa_public_key_1_pem : null
-  rsa_public_key_2  = module.snowflake_user_rsa_key_pairs_rotation.key_number == 2 ? module.snowflake_user_rsa_key_pairs_rotation.snowflake_rsa_public_key_2_pem : null
+  rsa_public_key    = module.snowflake_user_rsa_key_pairs_rotation.active_key_number == 1 ? module.snowflake_user_rsa_key_pairs_rotation.snowflake_rsa_public_key_1_pem : null
+  rsa_public_key_2  = module.snowflake_user_rsa_key_pairs_rotation.active_key_number == 2 ? module.snowflake_user_rsa_key_pairs_rotation.snowflake_rsa_public_key_2_pem : null
 }
 
 resource "snowflake_grant_privileges_to_account_role" "user_grant" {

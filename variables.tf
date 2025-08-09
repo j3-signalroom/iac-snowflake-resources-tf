@@ -86,3 +86,8 @@ variable "day_count" {
         error_message = "Rolling day count, `day_count`, must be greater than or equal to 1."
     }
 }
+
+variable "admin_user_secrets_root_path" {
+  description = "The root path for the admin user secrets in AWS Secrets Manager."
+  type        = string
+}
