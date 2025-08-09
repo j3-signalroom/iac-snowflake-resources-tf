@@ -3,10 +3,11 @@
 #
 # *** Script Syntax ***
 # ./deploy.sh <create | delete> --profile=<SSO_PROFILE_NAME> \
-#                               --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> \
-#                               --snowflake_user=<SNOWFLAKE_USER> \
-#                               --secrets_path=<SECRETS_PATH> \
-#                               --lambda_function_name=<LAMBDA_FUNCTION_NAME>
+#                               --snowflake-warehouse=<SNOWFLAKE_WAREHOUSE> \
+#                               --snowflake-user=<SNOWFLAKE_USER> \
+#                               --secrets-path=<SECRETS_PATH> \
+#                               --lambda-function-name=<LAMBDA_FUNCTION_NAME>
+#                               --admin-user-secrets-root-path=<ADMIN_USER_SECRETS_ROOT_PATH>
 #
 #
 
@@ -20,7 +21,7 @@ case $1 in
     echo
     echo "(Error Message 001)  You did not specify one of the commands: create | delete."
     echo
-    echo "Usage:  Require all four arguments ---> `basename $0` <create | delete> --profile=<SSO_PROFILE_NAME> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake_user=<SNOWFLAKE_USER> --secrets_path=<SECRETS_PATH> --lambda_function_name=<LAMBDA_FUNCTION_NAME>"
+    echo "Usage:  Require all four arguments ---> `basename $0` <create | delete> --profile=<SSO_PROFILE_NAME> --snowflake-warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake-user=<SNOWFLAKE_USER> --secrets-path=<SECRETS_PATH> --lambda-function-name=<LAMBDA_FUNCTION_NAME> --admin-user-secrets-root-path=<ADMIN_USER_SECRETS_ROOT_PATH>"
     echo
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
     ;;
@@ -34,18 +35,21 @@ do
     case $arg in
         *"--profile="*)
             AWS_PROFILE=$arg;;
-        *"--snowflake_warehouse="*)
+        *"--snowflake-warehouse="*)
             arg_length=22
             snowflake_warehouse=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
-        *"--snowflake_user="*)
+        *"--snowflake-user="*)
             arg_length=17
             snowflake_user=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
-        *"--secrets_path="*)
+        *"--secrets-path="*)
             arg_length=15
             secrets_path=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
-        *"--lambda_function_name="*)
+        *"--lambda-function-name="*)
             arg_length=23
             lambda_function_name=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
+        *"--admin-user-secrets-root-path="*)
+            arg_length=31
+            admin_user_secrets_root_path=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
     esac
 done
 
@@ -55,51 +59,62 @@ then
     echo
     echo "(Error Message 002)  You did not include the proper use of the --profile=<SSO_PROFILE_NAME> argument in the call."
     echo
-    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake_user=<SNOWFLAKE_USER> --secrets_path=<SECRETS_PATH> --lambda_function_name=<LAMBDA_FUNCTION_NAME>"
+    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake-warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake-user=<SNOWFLAKE_USER> --secrets-path=<SECRETS_PATH> --lambda-function-name=<LAMBDA_FUNCTION_NAME> --admin-user-secrets-root-path=<ADMIN_USER_SECRETS_ROOT_PATH>"
     echo
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
 fi
 
-# Check required --snowflake_warehouse argument was supplied
+# Check required --snowflake-warehouse argument was supplied
 if [ -z $snowflake_warehouse ]
 then
     echo
-    echo "(Error Message 003)  You did not include the proper use of the --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> argument in the call."
+    echo "(Error Message 003)  You did not include the proper use of the --snowflake-warehouse=<SNOWFLAKE_WAREHOUSE> argument in the call."
     echo
-    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake_user=<SNOWFLAKE_USER> --secrets_path=<SECRETS_PATH> --lambda_function_name=<LAMBDA_FUNCTION_NAME>"
+    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake-warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake-user=<SNOWFLAKE_USER> --secrets-path=<SECRETS_PATH> --lambda-function-name=<LAMBDA_FUNCTION_NAME> --admin-user-secrets-root-path=<ADMIN_USER_SECRETS_ROOT_PATH>"
     echo
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
 fi
 
-# Check required --snowflake_user argument was supplied
+# Check required --snowflake-user argument was supplied
 if [ -z $snowflake_user ]
 then
     echo
-    echo "(Error Message 004)  You did not include the proper use of the --snowflake_user=<SNOWFLAKE_USER> argument in the call."
+    echo "(Error Message 004)  You did not include the proper use of the --snowflake-user=<SNOWFLAKE_USER> argument in the call."
     echo
-    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake_user=<SNOWFLAKE_USER> --secrets_path=<SECRETS_PATH> --lambda_function_name=<LAMBDA_FUNCTION_NAME>"
+    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake-warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake-user=<SNOWFLAKE_USER> --secrets-path=<SECRETS_PATH> --lambda-function-name=<LAMBDA_FUNCTION_NAME> --admin-user-secrets-root-path=<ADMIN_USER_SECRETS_ROOT_PATH>"
     echo
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
 fi
 
-# Check required --secrets_path argument was supplied
+# Check required --secrets-path argument was supplied
 if [ -z $secrets_path ]
 then
     echo
-    echo "(Error Message 005)  You did not include the proper use of the --secrets_path=<SECRETS_PATH> argument in the call."
+    echo "(Error Message 005)  You did not include the proper use of the --secrets-path=<SECRETS_PATH> argument in the call."
     echo
-    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake_user=<SNOWFLAKE_USER> --secrets_path=<SECRETS_PATH> --lambda_function_name=<LAMBDA_FUNCTION_NAME>"
+    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake-warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake-user=<SNOWFLAKE_USER> --secrets-path=<SECRETS_PATH> --lambda-function-name=<LAMBDA_FUNCTION_NAME> --admin-user-secrets-root-path=<ADMIN_USER_SECRETS_ROOT_PATH>"
     echo
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
 fi
 
-# Check required --lambda_function_name argument was supplied
+# Check required --lambda-function-name argument was supplied
 if [ -z $lambda_function_name ]
 then
     echo
-    echo "(Error Message 006)  You did not include the proper use of the --lambda_function_name=<LAMBDA_FUNCTION_NAME> argument in the call."
+    echo "(Error Message 006)  You did not include the proper use of the --lambda-function-name=<LAMBDA_FUNCTION_NAME> argument in the call."
     echo
-    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake_user=<SNOWFLAKE_USER> --secrets_path=<SECRETS_PATH> --lambda_function_name=<LAMBDA_FUNCTION_NAME>"
+    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake-warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake-user=<SNOWFLAKE_USER> --secrets-path=<SECRETS_PATH> --lambda-function-name=<LAMBDA_FUNCTION_NAME> --admin-user-secrets-root-path=<ADMIN_USER_SECRETS_ROOT_PATH>"
+    echo
+    exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
+fi
+
+# Check required --admin-user-secrets-root-path argument was supplied
+if [ -z $admin_user_secrets_root_path ]
+then
+    echo
+    echo "(Error Message 007)  You did not include the proper use of the --admin-user-secrets-root-path=<ADMIN_USER_SECRETS_ROOT_PATH> argument in the call."
+    echo
+    echo "Usage:  Require all four arguments ---> `basename $0 $1` --profile=<SSO_PROFILE_NAME> --snowflake-warehouse=<SNOWFLAKE_WAREHOUSE> --snowflake-user=<SNOWFLAKE_USER> --secrets-path=<SECRETS_PATH> --lambda-function-name=<LAMBDA_FUNCTION_NAME> --admin-user-secrets-root-path=<ADMIN_USER_SECRETS_ROOT_PATH>"
     echo
     exit 85 # Common GNU/Linux Exit Code for 'Interrupted system call should be restarted'
 fi
@@ -120,7 +135,8 @@ printf "aws_account_id=\"${AWS_ACCOUNT_ID}\"\
 \nsnowflake_warehouse=\"${snowflake_warehouse}\"\
 \nsnowflake_user=\"${snowflake_user}\"\
 \nsecrets_path=\"${secrets_path}\"\
-\nlambda_function_name=\"${lambda_function_name}\"" > terraform.tfvars
+\nlambda_function_name=\"${lambda_function_name}\"\
+\nadmin_user_secrets_root_path=\"${admin_user_secrets_root_path}\"" > terraform.tfvars
 
 terraform init
 
