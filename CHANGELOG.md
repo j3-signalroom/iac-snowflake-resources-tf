@@ -7,6 +7,7 @@ The format is base on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), 
 ## [0.51.00.000] - 2025-08-31
 ### Added
 - Issue [#118](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/118)
+- Issue [#119](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/119)
 
 ## [0.50.00.000] - 2025-08-08
 ### Added
