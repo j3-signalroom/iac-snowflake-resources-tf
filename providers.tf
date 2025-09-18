@@ -11,7 +11,7 @@ provider "snowflake" {
   organization_name = local.snowflake_organization_name
   account_name      = local.snowflake_account_name
   user              = local.snowflake_admin_user
-  private_key       = base64decode(local.snowflake_active_private_key)
+  private_key       = local.snowflake_active_private_key
   authenticator     = "SNOWFLAKE_JWT"
 }
 
@@ -20,6 +20,6 @@ provider "snowflake" {
   organization_name = local.snowflake_organization_name
   account_name      = local.snowflake_account_name
   user              = local.snowflake_admin_user
-  private_key       = base64decode(local.snowflake_active_private_key)
+  private_key       = local.snowflake_active_private_key
   authenticator     = "SNOWFLAKE_JWT"
 }
