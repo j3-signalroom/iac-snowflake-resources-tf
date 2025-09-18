@@ -11,6 +11,7 @@ The format is base on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), 
 
 ### Changed
 - Issue [#126](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/126)
+- Issue [#128](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/128)
 
 ## [0.51.00.000] - 2025-08-31
 ### Added
