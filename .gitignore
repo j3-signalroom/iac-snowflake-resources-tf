@@ -1,8 +1,8 @@
 .DS_Store
 .env
 .vscode/
-scratchpad.md
-scratchpad.pdf
+scratch.pad
+scratch.pdf
 
 # Local .terraform directories
 **/.terraform/*
