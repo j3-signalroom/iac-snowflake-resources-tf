@@ -8,6 +8,7 @@ The format is base on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), 
 ### Added
 - Issue [#122](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/122)
 - Issue [#123](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/123)
+- Issue [#131](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/131)
 
 ### Changed
 - Issue [#126](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/126)
