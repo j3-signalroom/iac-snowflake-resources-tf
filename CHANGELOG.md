@@ -13,6 +13,7 @@ The format is base on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), 
 - Issue [#134](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/134)
 - Issue [#136](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/136)
 - Issue [#138](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/138)
+- Issue [#140](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/140)
 
 ### Changed
 - Issue [#126](https://github.com/j3-signalroom/iac-snowflake-resources-tf/issues/126)
