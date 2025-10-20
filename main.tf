@@ -78,7 +78,7 @@ resource "snowflake_grant_privileges_to_account_role" "warehouse_grant" {
 
 resource "snowflake_service_user" "user" {
   provider          = snowflake.security_admin
-  name              = upper("${var.snowflake_service_user}_USER")
+  name              = upper("${var.snowflake_service_user}_SERVICE_USER")
   default_warehouse = snowflake_warehouse.example.name
   default_role      = snowflake_account_role.role.name
   default_namespace = "${snowflake_database.example.name}.${snowflake_schema.schema.name}"

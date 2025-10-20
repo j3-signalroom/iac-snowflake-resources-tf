@@ -90,4 +90,5 @@ variable "day_count" {
 variable "admin_service_user_secrets_root_path" {
   description = "The root path for the admin user secrets in AWS Secrets Manager."
   type        = string
+  default     = ""
 }

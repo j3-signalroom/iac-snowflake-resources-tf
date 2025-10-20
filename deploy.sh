@@ -48,7 +48,7 @@ do
             arg_length=23
             lambda_function_name=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
         *"--admin-service-user-secrets-root-path="*)
-            arg_length=31
+            arg_length=39
             admin_service_user_secrets_root_path=${arg:$arg_length:$(expr ${#arg} - $arg_length)};;
     esac
 done
