@@ -29,9 +29,17 @@ on:
         type: string
         description: Snowflake Warehouse
         required: true
-      service_account_user:
+      snowflake_service_user:
         type: string
-        description: Snowflake Service Account User
+        description: Snowflake Service User
+        required: true
+      lambda_function_name:
+        type: string
+        description: Lambda Function Name
+        required: true
+      admin_service_user_secrets_root_path:
+        type: string
+        description: Admin Service User Secrets Root Path
         required: true
 
 run-name: ${{ github.workflow }} ${{ github.ref_name }} branch to the ${{ github.event.inputs.aws_region }} ${{ github.event.inputs.aws_environment }} environment
@@ -54,7 +62,9 @@ jobs:
             aws_prod_account_id: ${{ vars.AWS_PROD_ACCOUNT_ID }}
             aws_region: ${{ github.event.inputs.aws_region }}
             snowflake_warehouse: ${{ github.event.inputs.snowflake_warehouse }}
-            service_account_user: ${{ github.event.inputs.service_account_user }}
+            snowflake_service_user: ${{ github.event.inputs.snowflake_service_user }}
+            lambda_function_name: ${{ github.event.inputs.lambda_function_name }}
+            admin_service_user_secrets_root_path: ${{ github.event.inputs.admin_service_user_secrets_root_path }}
   
         - uses: hashicorp/setup-terraform@v3
           with:
@@ -86,7 +96,9 @@ jobs:
             TF_VAR_aws_secret_access_key: ${{ steps.aws-credentials.outputs.aws-secret-access-key }}
             TF_VAR_aws_session_token: ${{ steps.aws-credentials.outputs.aws-session-token }}
             TF_VAR_snowflake_warehouse: ${{ github.event.inputs.snowflake_warehouse }}
-            TF_VAR_service_account_user: ${{ github.event.inputs.service_account_user }}
+            TF_VAR_snowflake_service_user: ${{ github.event.inputs.snowflake_service_user }}
+            TF_VAR_lambda_function_name: ${{ github.event.inputs.lambda_function_name }}
+            TF_VAR_admin_service_user_secrets_root_path: ${{ github.event.inputs.admin_service_user_secrets_root_path }}
     
         - name: Terraform Destroy Apply
           id: apply_destroy
@@ -98,5 +110,7 @@ jobs:
             TF_VAR_aws_secret_access_key: ${{ steps.aws-credentials.outputs.aws-secret-access-key }}
             TF_VAR_aws_session_token: ${{ steps.aws-credentials.outputs.aws-session-token }}
             TF_VAR_snowflake_warehouse: ${{ github.event.inputs.snowflake_warehouse }}
-            TF_VAR_service_account_user: ${{ github.event.inputs.service_account_user }}
+            TF_VAR_snowflake_service_user: ${{ github.event.inputs.snowflake_service_user }}
+            TF_VAR_lambda_function_name: ${{ github.event.inputs.lambda_function_name }}
+            TF_VAR_admin_service_user_secrets_root_path: ${{ github.event.inputs.admin_service_user_secrets_root_path }}
   

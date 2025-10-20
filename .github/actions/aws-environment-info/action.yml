@@ -17,14 +17,22 @@ inputs:
     description: 'The AWS Prod Account ID'
   aws_region:
     required: true
+    description: 'The AWS Region'
   snowflake_warehouse:
     required: true
-  service_account_user:
+    description: 'The Snowflake Warehouse'
+  snowflake_service_user:
     required: true
-  day_count:
-    required: false
+    description: 'The Snowflake Service User'
+  lambda_function_name:
+    required: true
+    description: 'The Lambda Function Name'
+  admin_service_user_secrets_root_path:
+    required: true
+    description: 'The Admin Service User Secrets Root Path'
 outputs:
   aws_account_id:
+    description: 'The AWS Account ID for the selected environment'
     value: ${{ steps.workflow-inputs-output.outputs.AWS_ACCOUNT_ID }}
 
 runs:
@@ -61,5 +69,6 @@ runs:
         echo "aws_account_id   : ${{ env.AWS_ACCOUNT_ID }}" >> $GITHUB_STEP_SUMMARY        
         echo "aws_region       : ${{ inputs.aws_region }}" >> $GITHUB_STEP_SUMMARY
         echo "snowflake_warehouse : ${{ inputs.snowflake_warehouse }}" >> $GITHUB_STEP_SUMMARY
-        echo "service_account_user: ${{ inputs.service_account_user }}" >> $GITHUB_STEP_SUMMARY
-        echo "day_count           : ${{ inputs.day_count }}" >> $GITHUB_STEP_SUMMARY
+        echo "snowflake_service_user: ${{ inputs.snowflake_service_user }}" >> $GITHUB_STEP_SUMMARY
+        echo "lambda_function_name: ${{ inputs.lambda_function_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "admin_service_user_secrets_root_path: ${{ inputs.admin_service_user_secrets_root_path }}" >> $GITHUB_STEP_SUMMARY
