@@ -60,8 +60,8 @@ variable "snowflake_warehouse" {
     type        = string
 }
 
-variable "snowflake_user" {
-    description = "The Snowflake user who is to be assigned the RSA key pairs for its authentication."
+variable "snowflake_service_user" {
+    description = "The Snowflake service user who is to be assigned the RSA key pairs for its authentication."
     type        = string
 }
 
@@ -87,7 +87,7 @@ variable "day_count" {
     }
 }
 
-variable "admin_user_secrets_root_path" {
+variable "admin_service_user_secrets_root_path" {
   description = "The root path for the admin user secrets in AWS Secrets Manager."
   type        = string
 }

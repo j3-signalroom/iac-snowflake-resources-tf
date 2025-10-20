@@ -3,7 +3,7 @@
 
 With Terraform, users can efficiently manage a wide range of [Snowflake resources](https://registry.terraform.io/providers/snowflakedb/snowflake/latest/docs)—including Warehouses, Databases, Schemas, Tables, and Roles/Grants—by defining their desired state in configuration files. Terraform maintains a detailed record of the current state of these resources and compares it against the desired state specified by the user. Based on this comparison, Terraform automatically generates a reconciliation plan to bring the existing infrastructure into alignment with the desired configuration. This process involves creating, updating, or deleting resources as needed, enabling consistent, repeatable, and predictable management of infrastructure components.
 
-The configuration leverages the [IaC Snowflake User RSA key pairs Rotation Terraform module](https://github.com/j3-signalroom/iac-snowflake-user-rsa_key_pairs_rotation-tf_module) to automate the creation and rotation of [RSA key pairs](https://github.com/j3-signalroom/j3-techstack-lexicon/blob/main/cryptographic-glossary.md#rsa-key-pair) for a Snowflake service account user. This module ensures that each RSA key pair is securely rotated based on a defined schedule, reducing the risk of credential compromise and improving the overall security of the data streaming environment.
+The configuration leverages the [IaC Snowflake Service User RSA key pairs Rotation Terraform module](https://github.com/j3-signalroom/iac-snowflake-service_user-rsa_key_pairs_rotation-tf_module) to automate the creation and rotation of [RSA key pairs](https://github.com/j3-signalroom/j3-techstack-lexicon/blob/main/cryptographic-glossary.md#rsa-key-pair) for a Snowflake service account user. This module ensures that each RSA key pair is securely rotated based on a defined schedule, reducing the risk of credential compromise and improving the overall security of the data streaming environment.
 
 To protect sensitive credentials, the configuration securely stores the generated RSA key pairs for both resources in AWS Secrets Manager, ensuring that only authorized users and services have access to these credentials. This secure storage method prevents unauthorized access and minimizes the risk of key exposure.
 
@@ -29,17 +29,17 @@ To protect sensitive credentials, the configuration securely stores the generate
 
 2. Clone the repo:
     ```bash
-    git clone https://github.com/j3-signalroom/snowflake_admin_user_rsa_key_credentials_creation-script.git
+    git clone https://github.com/j3-signalroom/iac-snowflake-admin_service_user-rsa_key_credentials_creation-script.git
     ```
 
-    Then refer to [`snowflake_admin_user_rsa_key_credentials_creation-script README`](https://github.com/j3-signalroom/snowflake_admin_user_rsa_key_credentials_creation-script) to set it up.
+    Then refer to [`iac-snowflake-admin_service_user-rsa_key_credentials_creation-script README`](https://github.com/j3-signalroom/iac-snowflake-admin_service_user-rsa_key_credentials_creation-script) to set it up.
 
 3. Clone the repo:
     ```bash
-    git clone https://github.com/j3-signalroom/iac-snowflake-user-rsa_key_pairs_and_jwt_generator-lambda.git
+    git clone https://github.com/j3-signalroom/iac-snowflake-service_user-rsa_key_pairs_and_jwt_generator-lambda.git
     ```
 
-    Then refer to [`iac-snowflake-user-rsa_key_pairs_and_jwt_generator-lambda README`](https://github.com/j3-signalroom/iac-snowflake-user-rsa_key_pairs_and_jwt_generator-lambda) to set it up.
+    Then refer to [`iac-snowflake-service_user-rsa_key_pairs_and_jwt_generator-lambda README`](https://github.com/j3-signalroom/iac-snowflake-service_user-rsa_key_pairs_and_jwt_generator-lambda) to set it up.
 
 4. Clone the repo:
     ```shell
@@ -62,15 +62,19 @@ To protect sensitive credentials, the configuration securely stores the generate
     ```shell
     ./deploy.sh <create | delete> --profile=<SSO_PROFILE_NAME> \
                                   --snowflake_warehouse=<SNOWFLAKE_WAREHOUSE> \
-                                  --service_account_user=<SERVICE_ACCOUNT_USER> \
-                                  --day_count=<DAY_COUNT>
+                                  --snowflake-service-user=<SNOWFLAKE_SERVICE_USER> \
+                                  --secrets-path=<SECRETS_PATH> \
+                                  --lambda-function-name=<LAMBDA_FUNCTION_NAME> \
+                                  --admin-service-user-secrets-root-path=<ADMIN_SERVICE_USER_SECRETS_ROOT_PATH>
     ```
     Argument placeholder|Replace with
     -|-
     `<SSO_PROFILE_NAME>`|your AWS SSO profile name for your AWS infrastructue that host your AWS Secrets Manager.
     `<SNOWFLAKE_WAREHOUSE>`|the Snowflake warehouse (or "virtual warehouse") you choose to run the resources in Snowflake.
-    `<SERVICE_ACCOUNT_USER>`|the Snowflake service account user who is to be assigned the RSA key pairs for its authentication.
-    `<DAY_COUNT>`|how many day(s) should the RSA key pairs be rotated for.
+    `<SNOWFLAKE_SERVICE_USER>`|the Snowflake service account user who is to be assigned the RSA key pairs for its authentication.
+    `<SECRETS_PATH>`|the AWS Secrets Manager path where the RSA key pairs for the Snowflake service account user will be stored.
+    `<LAMBDA_FUNCTION_NAME>`|the name of the AWS Lambda function that will handle the RSA key pair rotation for the Snowflake service account user.
+    `<ADMIN_SERVICE_USER_SECRETS_ROOT_PATH>`|the root path for the Snowflake admin service user secrets in AWS Secrets Manager.
 
 7. Or, to run the repository's Terraform configuration from GitHub, follow these steps:
 
