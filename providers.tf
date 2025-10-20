@@ -10,7 +10,7 @@ provider "snowflake" {
   role              = "SECURITYADMIN"
   organization_name = local.snowflake_organization_name
   account_name      = local.snowflake_account_name
-  user              = local.snowflake_admin_user
+  user              = local.snowflake_admin_service_user
   private_key       = local.snowflake_active_private_key
   authenticator     = "SNOWFLAKE_JWT"
 }
@@ -19,7 +19,7 @@ provider "snowflake" {
   role              = "SYSADMIN"
   organization_name = local.snowflake_organization_name
   account_name      = local.snowflake_account_name
-  user              = local.snowflake_admin_user
+  user              = local.snowflake_admin_service_user
   private_key       = local.snowflake_active_private_key
   authenticator     = "SNOWFLAKE_JWT"
 }
